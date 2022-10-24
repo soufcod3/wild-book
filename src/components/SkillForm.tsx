@@ -28,8 +28,8 @@ const SkillForm = (props: ISkillForm): JSX.Element => {
       },
     });
     console.log(data);
-
-    setSkillName("");
+    setSkillName(""); // Reset input
+    props.refetchSkills(); // Refresh skills for upvote form
   }
 
   return (

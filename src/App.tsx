@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import "./App.css";
 import Wilder from "./components/Wilder";
 import Forms from "./components/Forms";
@@ -13,8 +12,10 @@ const GET_WILDERS = gql`
       name
       city
       upvotes {
-        count
+        id
+        upvotes
         skill {
+          id
           name
         }
       }
@@ -36,7 +37,7 @@ function App() {
   const {
     loading: wildersLoading,
     data: wildersData,
-    refetch: wildersRefetch,
+    refetch: refetchWilders,
   } = useQuery(GET_WILDERS);
 
   const [wilders, setWilders] = React.useState<IWilder[]>([]);
@@ -44,19 +45,20 @@ function App() {
     setWilders(wildersData && wildersData.wilders);
   };
 
-  const { loading: skillsLoading, data: skillsData } = useQuery(GET_SKILLS);
+  const {
+    data: skillsData,
+    refetch: refetchSkills
+  } = useQuery(GET_SKILLS);
   const [skills, setSkills] = React.useState([]);
 
   const getSkills = () => {
-    axios.get("http://localhost:8080/api/skills").then((skills) => {
-      setSkills(skills.data);
-    });
+    setSkills(skillsData && skillsData.skills);
   };
 
   useEffect(() => {
     getWilders();
     getSkills();
-  }, []);
+  });
 
   return (
     <div>
@@ -70,8 +72,8 @@ function App() {
         <Forms
           wilders={wilders}
           skills={skills}
-          getWilders={wildersRefetch}
-          getSkills={getSkills}
+          refetchWilders={refetchWilders}
+          refetchSkills={refetchSkills}
         />
         {wildersLoading ? <h1>Chargement...</h1> : null}
         <section className="card-row">

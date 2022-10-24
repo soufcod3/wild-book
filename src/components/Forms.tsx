@@ -8,16 +8,17 @@ const Forms = (props: IForms) => {
   return (
     <section className="container row">
       <div className="col-4">
-        <WilderForm onWilderCreated={() => props.getWilders()} />
+        <WilderForm onWilderCreated={() => props.refetchWilders()} />
       </div>
       <div className="col-4">
-        <SkillForm onSkillCreated={() => props.getSkills()} />
+        <SkillForm 
+        refetchSkills={() => props.refetchSkills()} />
       </div>
       <div className="col-4">
         <WilderSkillForm
           wilders={props.wilders}
           skills={props.skills}
-          onLinking={() => props.getWilders()}
+          refetchWilders={() => props.refetchWilders()}
         />
       </div>
     </section>

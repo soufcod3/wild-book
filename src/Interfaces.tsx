@@ -1,12 +1,12 @@
 export interface IForms {
-    getSkills: Function,
-    getWilders: Function,
+    refetchSkills: Function,
+    refetchWilders: Function,
     wilders: IWilder[],
     skills: ISkill[]
 }
 
 export interface ISkillForm {
-    onSkillCreated: Function
+    refetchSkills: Function
 }
 
 export interface ISkill {
@@ -36,5 +36,5 @@ export interface IWilderForm {
 export interface IWilderSkillForm {
     wilders: IWilder[],
     skills: ISkill[],
-    onLinking: Function
+    refetchWilders: Function
 }
